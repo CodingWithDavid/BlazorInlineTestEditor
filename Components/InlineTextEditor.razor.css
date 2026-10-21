@@ -1,0 +1,66 @@
+.inline-editor {
+    max-width: 36rem;
+    font: inherit;
+}
+
+label {
+    display: block;
+    margin-bottom: .35rem;
+    font-weight: 600;
+}
+
+.edit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+input {
+    flex: 1 1 12rem;
+    min-width: 0;
+}
+
+input, button {
+    font: inherit;
+    padding: .55rem .75rem;
+    border: 1px solid #64748b;
+    border-radius: .5rem;
+}
+
+button {
+    cursor: pointer;
+    background: #eff6ff;
+    color: #173b70;
+}
+
+.display-value {
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    max-width: 100%;
+    text-align: left;
+    overflow-wrap: anywhere;
+    background: transparent;
+    border-color: transparent;
+}
+
+.display-value:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+input:focus-visible, button:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: .65;
+}
+
+.message {
+    display: block;
+    margin-top: .35rem;
+    color: #b42318;
+}

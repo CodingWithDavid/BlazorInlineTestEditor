@@ -1,0 +1,74 @@
+@page "/"
+
+<PageTitle>InlineTextEditor</PageTitle>
+
+<h1>This week's InlineTextEditor</h1>
+<p>Click a displayed value to edit it in place, then Save or Cancel. Escape also cancels.</p>
+
+<section class="mb-4">
+    <InlineTextEditor Label="Project name"
+                      Value="@_projectName"
+                      ValueChanged="SaveProjectName" />
+</section>
+
+<section class="mb-4">
+    <InlineTextEditor Label="Purchase-request description"
+                      Value="@_description"
+                      MaxLength="200"
+                      ValueChanged="SaveDescription" />
+</section>
+
+<section class="mb-4">
+    <InlineTextEditor Label="Dashboard label"
+                      Value="@_dashboardLabel"
+                      MaxLength="40"
+                      ValueChanged="SaveDashboardLabel" />
+</section>
+
+<fieldset class="border rounded p-3" style="max-width: 36rem;">
+    <legend class="float-none w-auto px-2 fs-6">Test options</legend>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="slow" @bind="_slowSave" />
+        <label class="form-check-label" for="slow">Simulate slow save (1.5 s)</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="fail" @bind="_failSave" />
+        <label class="form-check-label" for="fail">Simulate save failure</label>
+    </div>
+    <p class="mt-2 mb-0 small text-muted">Save calls: @_saveCount</p>
+</fieldset>
+
+@code {
+    private string _projectName = "Warehouse Expansion";
+    private string _description = "Replacement laptops for the field service team";
+    private string _dashboardLabel = "Open Requests";
+    private bool _slowSave, _failSave;
+    private int _saveCount;
+
+    private async Task SaveProjectName(string candidate)
+    {
+        await SimulateSave();
+        _projectName = candidate;
+    }
+
+    private async Task SaveDescription(string candidate)
+    {
+        await SimulateSave();
+        _description = candidate;
+    }
+
+    private async Task SaveDashboardLabel(string candidate)
+    {
+        await SimulateSave();
+        _dashboardLabel = candidate;
+    }
+
+    // Stand-in for an API/repository call.
+    private async Task SimulateSave()
+    {
+        _saveCount++;
+        await Task.Delay(_slowSave ? 1500 : 150);
+        if (_failSave)
+            throw new InvalidOperationException("Simulated save failure.");
+    }
+}

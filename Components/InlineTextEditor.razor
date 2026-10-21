@@ -1,0 +1,114 @@
+<div class="inline-editor" @onkeydown="HandleKey">
+    @if (_editing)
+    {
+        <label for="@_id">@Label</label>
+
+        <div class="edit-row">
+            <input id="@_id" @ref="_input"
+                   @bind="_draft" @bind:event="oninput"
+                   maxlength="@MaxLength"
+                   disabled="@_saving"
+                   aria-invalid="@(_error is not null ? "true" : "false")"
+                   aria-describedby="@($"{_id}-message")" />
+
+            <button type="button" @onclick="Save"
+                    disabled="@_saving">
+                @(_saving ? "Saving…" : "Save")
+            </button>
+            <button type="button" @onclick="Cancel"
+                    disabled="@_saving">
+                Cancel
+            </button>
+        </div>
+    }
+    else
+    {
+        <button type="button" class="display-value"
+                @ref="_trigger" @onclick="BeginEdit"
+                aria-label="@($"Edit {Label}: {(string.IsNullOrWhiteSpace(Value) ? "no value" : Value)}")">
+            @(string.IsNullOrWhiteSpace(Value) ? "Add a value" : Value)
+            <span aria-hidden="true">✎</span>
+        </button>
+    }
+
+    <span id="@($"{_id}-message")" class="message"
+          role="status" aria-live="polite">
+        @_error
+    </span>
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "Value";
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public int MaxLength { get; set; } = 120;
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    private readonly string _id = $"edit-{Guid.NewGuid():N}";
+    private ElementReference _input, _trigger;
+    private string _draft = "";
+    private string? _error;
+    private bool _editing, _saving, _focusPending;
+
+    private void BeginEdit()
+    {
+        _draft = Value;
+        _error = null;
+        _editing = true;
+        _focusPending = true;
+    }
+
+    private void Cancel()
+    {
+        if (_saving) return;
+        _editing = false;
+        _error = null;
+        _focusPending = true;
+    }
+
+    private void HandleKey(KeyboardEventArgs e)
+    {
+        if (_editing && e.Key == "Escape")
+            Cancel();
+    }
+
+    private async Task Save()
+    {
+        if (_saving) return;
+
+        var candidate = _draft.Trim();
+        if (candidate.Length == 0 || candidate.Length > MaxLength)
+        {
+            _error = $"Enter between 1 and {MaxLength} characters.";
+            _focusPending = true;
+            return;
+        }
+
+        _saving = true;
+        _error = null;
+        try
+        {
+            await ValueChanged.InvokeAsync(candidate);
+            _editing = false;
+        }
+        catch (Exception)
+        {
+            _error = "Could not save. Your draft is still here; try again.";
+        }
+        finally
+        {
+            _saving = false;
+            _focusPending = true;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_focusPending) return;
+        _focusPending = false;
+
+        if (_editing)
+            await _input.FocusAsync();
+        else
+            await _trigger.FocusAsync();
+    }
+}
