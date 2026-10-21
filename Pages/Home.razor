@@ -1,42 +1,273 @@
 @page "/"
 
-<PageTitle>InlineTextEditor</PageTitle>
+<PageTitle>InlineTextEditor — edit in place</PageTitle>
 
-<h1>This week's InlineTextEditor</h1>
-<p>Click a displayed value to edit it in place, then Save or Cancel. Escape also cancels.</p>
+<main class="landing">
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-glow hero-glow-one"></div>
+        <div class="hero-glow hero-glow-two"></div>
+        <div class="content-width hero-grid">
+            <div class="hero-copy">
+                <div class="release-pill">
+                    <span class="status-dot"></span>
+                    A small component with a thoughtful workflow
+                </div>
 
-<section class="mb-4">
-    <InlineTextEditor Label="Project name"
-                      Value="@_projectName"
-                      ValueChanged="SaveProjectName" />
-</section>
+                <h1 id="hero-title">
+                    Make everyday text editable,
+                    <span>right where it lives.</span>
+                </h1>
 
-<section class="mb-4">
-    <InlineTextEditor Label="Purchase-request description"
-                      Value="@_description"
-                      MaxLength="200"
-                      ValueChanged="SaveDescription" />
-</section>
+                <p class="hero-description">
+                    InlineTextEditor turns a displayed value into a focused, keyboard-friendly edit.
+                    Change a project name, request description, or dashboard label—then save only when you're ready.
+                </p>
 
-<section class="mb-4">
-    <InlineTextEditor Label="Dashboard label"
-                      Value="@_dashboardLabel"
-                      MaxLength="40"
-                      ValueChanged="SaveDashboardLabel" />
-</section>
+                <div class="hero-actions">
+                    <a class="button-primary" href="#demo">
+                        Try the live examples
+                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4l6 6-6 6" /></svg>
+                    </a>
+                    <a class="button-secondary" href="#how-it-works">Explore the details</a>
+                </div>
 
-<fieldset class="border rounded p-3" style="max-width: 36rem;">
-    <legend class="float-none w-auto px-2 fs-6">Test options</legend>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="slow" @bind="_slowSave" />
-        <label class="form-check-label" for="slow">Simulate slow save (1.5 s)</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="fail" @bind="_failSave" />
-        <label class="form-check-label" for="fail">Simulate save failure</label>
-    </div>
-    <p class="mt-2 mb-0 small text-muted">Save calls: @_saveCount</p>
-</fieldset>
+                <div class="trust-row" aria-label="Component highlights">
+                    <span class="trust-intro">Made for real workflows</span>
+                    <span class="trust-item"><span class="check-icon">✓</span> Keyboard friendly</span>
+                    <span class="trust-item"><span class="check-icon">✓</span> Parent-owned saves</span>
+                </div>
+            </div>
+
+            <div class="hero-visual" aria-label="Example dashboard card">
+                <div class="visual-aura"></div>
+                <div class="dashboard-card">
+                    <div class="window-bar">
+                        <div class="window-dots" aria-hidden="true">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span class="window-caption">workspace / overview</span>
+                        <span class="live-indicator"><span></span> LIVE</span>
+                    </div>
+
+                    <div class="workspace-heading">
+                        <div>
+                            <span class="eyebrow">PROJECT WORKSPACE</span>
+                            <h2>Good morning, Alex</h2>
+                        </div>
+                        <div class="avatar" aria-label="Alex Morgan">AM</div>
+                    </div>
+
+                    <div class="pipeline-card">
+                        <div class="pipeline-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M4 18V6m0 12h16M8 14l3-4 3 2 5-6" /></svg>
+                        </div>
+                        <div class="pipeline-copy">
+                            <span>Active pipeline</span>
+                            <strong>12 projects</strong>
+                        </div>
+                        <span class="trend-pill">+18.2%</span>
+                    </div>
+
+                    <div class="metric-row">
+                        <div class="metric-label"><span>Workflow health</span><strong>94%</strong></div>
+                        <div class="progress-track"><span class="progress-fill health-fill"></span></div>
+                    </div>
+                    <div class="metric-row">
+                        <div class="metric-label"><span>Changes saved</span><strong>99.8%</strong></div>
+                        <div class="progress-track"><span class="progress-fill save-fill"></span></div>
+                    </div>
+
+                    <div class="activity-line">
+                        <span class="activity-icon" aria-hidden="true">✦</span>
+                        <span>Everything is up to date</span>
+                        <span class="activity-time">just now</span>
+                    </div>
+                </div>
+                <div class="floating-note">
+                    <span class="note-icon" aria-hidden="true">↗</span>
+                    <span><strong>Edit in context</strong><small>No form detour needed</small></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="proof-strip" aria-label="Component facts">
+        <div class="content-width proof-grid">
+            <div class="proof-item">
+                <span class="proof-number">03</span>
+                <span><strong>Live examples</strong><small>Three practical fields to try</small></span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-number">120</span>
+                <span><strong>Characters by default</strong><small>Set a different limit per field</small></span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-number">0</span>
+                <span><strong>Custom JavaScript</strong><small>Built with Blazor focus APIs</small></span>
+            </div>
+            <div class="proof-item proof-note">
+                <span class="proof-mark" aria-hidden="true">✓</span>
+                <span><strong>Changes stay a draft</strong><small>Until the user chooses Save</small></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section" id="demo" aria-labelledby="demo-title">
+        <div class="content-width">
+            <div class="section-heading">
+                <span class="section-kicker">THE INTERACTIVE DEMO</span>
+                <h2 id="demo-title">Go ahead. Change something.</h2>
+                <p>Click any value to edit it. Save commits the draft; Cancel or Escape leaves the original untouched.</p>
+            </div>
+
+            <div class="demo-layout">
+                <div class="editor-list">
+                    <article class="editor-card">
+                        <div class="editor-card-top">
+                            <div class="editor-icon project-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h4l2 2h7A1.5 1.5 0 0 1 20 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z" /></svg>
+                            </div>
+                            <span class="edit-hint">CLICK VALUE TO EDIT <span aria-hidden="true">↗</span></span>
+                        </div>
+                        <h3>Project name</h3>
+                        <p>Keep the workspace title current without leaving the page.</p>
+                        <div class="editor-control">
+                            <InlineTextEditor Label="Project name"
+                                              Value="@_projectName"
+                                              ValueChanged="SaveProjectName" />
+                        </div>
+                    </article>
+
+                    <article class="editor-card">
+                        <div class="editor-card-top">
+                            <div class="editor-icon request-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12a2 2 0 0 1 2-2.5Zm7 0v4h4M8.5 12h7m-7 3.5h7" /></svg>
+                            </div>
+                            <span class="edit-hint">UP TO 200 CHARACTERS</span>
+                        </div>
+                        <h3>Purchase-request description</h3>
+                        <p>Make a quick wording change right where the request is reviewed.</p>
+                        <div class="editor-control">
+                            <InlineTextEditor Label="Purchase-request description"
+                                              Value="@_description"
+                                              MaxLength="200"
+                                              ValueChanged="SaveDescription" />
+                        </div>
+                    </article>
+
+                    <article class="editor-card">
+                        <div class="editor-card-top">
+                            <div class="editor-icon dashboard-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="15" rx="2" /><path d="M4 9h16m-11 0v10.5" /></svg>
+                            </div>
+                            <span class="edit-hint">UP TO 40 CHARACTERS</span>
+                        </div>
+                        <h3>Dashboard label</h3>
+                        <p>Rename a section so the dashboard reflects what your team calls it.</p>
+                        <div class="editor-control">
+                            <InlineTextEditor Label="Dashboard label"
+                                              Value="@_dashboardLabel"
+                                              MaxLength="40"
+                                              ValueChanged="SaveDashboardLabel" />
+                        </div>
+                    </article>
+                </div>
+
+                <aside class="demo-controls" aria-labelledby="controls-title">
+                    <div class="controls-heading">
+                        <div class="controls-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M12 3v3m0 12v3M4.2 6l2.1 2.1m11.4 7.8 2.1 2.1M3 12h3m12 0h3M4.2 18l2.1-2.1m11.4-7.8L19.8 6M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" /></svg>
+                        </div>
+                        <div>
+                            <span class="section-kicker">PLAY WITH THE STATES</span>
+                            <h3 id="controls-title">Test options</h3>
+                        </div>
+                    </div>
+                    <p class="controls-description">Try a delayed response or a failed save. The editor handles both without losing your draft.</p>
+
+                    <label class="toggle-row" for="slow">
+                        <span class="toggle-copy"><strong>Slow down saving</strong><small>Wait 1.5 seconds before the save finishes</small></span>
+                        <input class="switch-input" type="checkbox" id="slow" @bind="_slowSave" />
+                        <span class="switch" aria-hidden="true"></span>
+                    </label>
+                    <label class="toggle-row" for="fail">
+                        <span class="toggle-copy"><strong>Simulate a failure</strong><small>Keep the draft so you can retry</small></span>
+                        <input class="switch-input" type="checkbox" id="fail" @bind="_failSave" />
+                        <span class="switch" aria-hidden="true"></span>
+                    </label>
+
+                    <div class="save-counter">
+                        <span class="counter-indicator"></span>
+                        <span>Save attempts</span>
+                        <strong>@_saveCount.ToString("D2")</strong>
+                    </div>
+                    <div class="keyboard-tip">
+                        <span class="escape-key">ESC</span>
+                        <span>Press Escape anytime to cancel an edit.</span>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <section class="details-section" id="how-it-works" aria-labelledby="details-title">
+        <div class="content-width">
+            <div class="section-heading">
+                <span class="section-kicker">SMALL DETAILS. BETTER FLOW.</span>
+                <h2 id="details-title">Thoughtful from first click to save.</h2>
+                <p>A focused interaction, with the important parts handled for you.</p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon focus-feature" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M8 4H5a1 1 0 0 0-1 1v3m12-4h3a1 1 0 0 1 1 1v3M4 16v3a1 1 0 0 0 1 1h3m12-4v3a1 1 0 0 1-1 1h-3M9 12h6m-3-3v6" /></svg>
+                    </div>
+                    <h3>Focus follows the flow</h3>
+                    <p>Opening moves focus into the input. Save and Cancel return it to the displayed value.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon draft-feature" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M12 3.5 19 7v5c0 4.2-2.8 7.2-7 8.5C7.8 19.2 5 16.2 5 12V7l7-3.5Z" /><path d="m9 12 2 2 4-4" /></svg>
+                    </div>
+                    <h3>Your draft stays yours</h3>
+                    <p>Nothing is committed by typing or tabbing away. A failed save keeps the draft ready to retry.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon callback-feature" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M8 7H5a2 2 0 0 0-2 2v10h10a2 2 0 0 0 2-2v-3m-4-4 8-8m-6 0h6v6" /></svg>
+                    </div>
+                    <h3>Persistence stays with you</h3>
+                    <p>An <code>EventCallback&lt;string&gt;</code> hands the trimmed value to the parent, which owns the actual save.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="closing-section">
+        <div class="content-width closing-card">
+            <div class="closing-orb"></div>
+            <div class="closing-copy">
+                <span class="section-kicker">READY WHEN YOU ARE</span>
+                <h2>One click closer to a smoother workflow.</h2>
+                <p>Try an edit above. Your changes live in this demo only and reset when the page reloads.</p>
+            </div>
+            <a class="closing-button" href="#demo">Try the editor <span aria-hidden="true">↑</span></a>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="content-width footer-inner">
+            <a class="footer-brand" href="#" aria-label="InlineTextEditor home">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M13 2 5 13h6l-1 9 9-12h-6l1-8Z" /></svg>
+                </span>
+                <span>InlineTextEditor<span class="brand-period">.</span></span>
+            </a>
+            <p>A .NET 10 Blazor WebAssembly example.</p>
+            <a class="footer-top" href="#top">Back to top ↑</a>
+        </div>
+    </footer>
+</main>
 
 @code {
     private string _projectName = "Warehouse Expansion";
@@ -63,7 +294,6 @@
         _dashboardLabel = candidate;
     }
 
-    // Stand-in for an API/repository call.
     private async Task SimulateSave()
     {
         _saveCount++;

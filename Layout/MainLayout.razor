@@ -1,16 +1,42 @@
-﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inherits LayoutComponentBase
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+<div id="top" class="app-shell">
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="" aria-label="InlineTextEditor home">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M13 2 5 13h6l-1 9 9-12h-6l1-8Z" /></svg>
+                </span>
+                <span>InlineTextEditor<span class="brand-period">.</span></span>
+            </a>
+
+            <button class="menu-toggle" type="button"
+                    aria-label="@(_menuOpen ? "Close navigation menu" : "Open navigation menu")"
+                    aria-expanded="@_menuOpen"
+                    @onclick="ToggleMenu">
+                <span></span><span></span>
+            </button>
+
+            <nav class="@($"header-nav {(_menuOpen ? "is-open" : string.Empty)}")" aria-label="Main navigation">
+                <a href="#demo" @onclick="CloseMenu">Live demo</a>
+                <a href="#how-it-works" @onclick="CloseMenu">How it works</a>
+                <a class="nav-cta" href="#demo" @onclick="CloseMenu">
+                    Try the editor
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4l6 6-6 6" /></svg>
+                </a>
+            </nav>
         </div>
+    </header>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <div class="page-content">
+        @Body
+    </div>
 </div>
+
+@code {
+    private bool _menuOpen;
+
+    private void ToggleMenu() => _menuOpen = !_menuOpen;
+
+    private void CloseMenu() => _menuOpen = false;
+}
